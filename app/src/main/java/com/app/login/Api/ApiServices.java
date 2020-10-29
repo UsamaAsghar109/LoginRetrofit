@@ -25,7 +25,7 @@ public interface ApiServices {
     Call<ResponseBody> getToken(@Header("Authorization") String token);
 
     @GET("/applications/403/users")
-    Call<UserStatusResponse> userStatus(@Header("Authorization") String token,
+    Call<UserStatusResponse> userStatus(@Header("Authorization") String token
                                         );
 
 }
