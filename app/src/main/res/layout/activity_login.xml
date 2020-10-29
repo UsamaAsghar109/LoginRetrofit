@@ -78,14 +78,6 @@
         android:textColor="@color/white"
         android:textStyle="bold" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/check_data"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/login"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:text="Your text"-->
-<!--        android:textColor="@color/white" />-->
 
     <Button
         android:id="@+id/myToken"
@@ -99,6 +91,18 @@
         android:text="Token"
         android:textColor="@color/white"
         android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/check_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myToken"
+                android:layout_centerHorizontal="true"
+                android:text="Your text"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white" />
+
+
 
     </RelativeLayout>
 </ScrollView>

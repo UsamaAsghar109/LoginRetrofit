@@ -10,14 +10,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.login.Api.ApiClient;
 import com.app.login.Models.LoginRequest;
 import com.app.login.Models.LoginResponse;
+import com.app.login.Models.UserStatusResponse;
 import com.app.login.R;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,10 +29,11 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    //    TextView textView;
+    TextView textView;
     private String token;
     EditText usernameEd, passwordEd;
     Button login, myToken;
+    LoginResponse loginResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameEd = findViewById(R.id.usernameEd);
         passwordEd = findViewById(R.id.passwordEd);
-//        textView=findViewById(R.id.check_data);
+        textView=findViewById(R.id.check_data);
         myToken = findViewById(R.id.myToken);
         login = findViewById(R.id.login);
 
@@ -59,12 +63,53 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+//        myToken.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(LoginActivity.this, "Token Button Clicked", Toast.LENGTH_SHORT).show();
+////                getToken();
+//
+//            }
+//        });
+
         myToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Token Button Clicked", Toast.LENGTH_SHORT).show();
-                getToken();
+//                Intent intent=getIntent();
+//                if(intent.getExtras()!=null)
+//                {
+//                    loginResponse=(LoginResponse) intent.getSerializableExtra("data");
+//                    Toast.makeText(DetailsActivity.this, "The message "+loginResponse, Toast.LENGTH_SHORT).show();
+//                }
+//                userStatusResponse();
+                Call<List<UserStatusResponse>> call = ApiClient.getApiServices().userStatus(token);
+                call.enqueue(new Callback<List<UserStatusResponse>>() {
+                    @Override
+                    public void onResponse(Call<List<UserStatusResponse>> call, Response<List<UserStatusResponse>> response) {
+                        if (!response.isSuccessful()) {
+                            textView.setText("Code: " + response.code());
+                            return;
+                        }
+                        List<UserStatusResponse> userStatusResponses = response.body();
+                        for (UserStatusResponse userStatusResponse : userStatusResponses) {
+                            String content = "";
+                            content += "Position: " + userStatusResponse.getPosition() + "\n";
+                            content += "Variables: " + userStatusResponse.getVariables() + "\n";
+                            content += "Velocity: " + userStatusResponse.getVelocity() + "\n";
+                            content += "UTC: " + userStatusResponse.getUtc() + "\n";
+                            content += "Username: " + userStatusResponse.getUsername() + "\n";
+                            content += "ID: " + userStatusResponse.getId() + "\n";
+                            textView.setText(content);
 
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<UserStatusResponse>> call, Throwable t) {
+
+                        Toast.makeText(LoginActivity.this, "Could not fetch any results" + t, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -82,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     token = response.body().getToken();
 //                    Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
                     Toast.makeText(LoginActivity.this, "Token" + loginResponse.getToken(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, DetailsActivity.class).putExtra("data", token));
+//                    startActivity(new Intent(LoginActivity.this, DetailsActivity.class).putExtra("data", token));
 
                 } else {
                     Toast.makeText(LoginActivity.this, "Login is not correct", Toast.LENGTH_SHORT).show();
@@ -98,28 +143,28 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void getToken() {
-        Call<ResponseBody> call = ApiClient.getApiServices().getToken(token);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        Toast.makeText(LoginActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Toast.makeText(LoginActivity.this, "Token is not correct Error try again------>" + t, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
+//    private void getToken() {
+//        Call<ResponseBody> call = ApiClient.getApiServices().getToken(token);
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                if (response.isSuccessful()) {
+//                    try {
+//                        Toast.makeText(LoginActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                Toast.makeText(LoginActivity.this, "Token is not correct Error try again------>" + t, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
 
 
 }

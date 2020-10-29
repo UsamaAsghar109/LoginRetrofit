@@ -7,6 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient{
 
+    public static final String BASE_URL="http://52.77.17.12/comGpsGate/api/v.1/applications/16/";
+    public static final String TOKEN="tokens";
+    public static final String USER_STATUS = "users/403/status";
+
 //    ApiClient instance= new ApiClient();
 
     public static Retrofit getretrofit() {
@@ -16,9 +20,10 @@ public class ApiClient{
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://52.77.17.12/comGpsGate/api/v.1/applications/16/")
+                .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .build();
 

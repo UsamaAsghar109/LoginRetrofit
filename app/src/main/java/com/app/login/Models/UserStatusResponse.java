@@ -33,15 +33,15 @@ public class UserStatusResponse {
     @Expose
     private int id;
 
-    public UserStatusResponse(String token, Position position, String utc, Velocity velocity, Variable variables, String username, int id) {
-        this.token = token;
-        this.position = position;
-        this.utc = utc;
-        this.velocity = velocity;
-        this.variables = variables;
-        this.username = username;
-        this.id = id;
-    }
+//    public UserStatusResponse(String token, Position position, String utc, Velocity velocity, Variable variables, String username, int id) {
+//        this.token = token;
+//        this.position = position;
+//        this.utc = utc;
+//        this.velocity = velocity;
+//        this.variables = variables;
+//        this.username = username;
+//        this.id = id;
+//    }
 
     public UserStatusResponse(TextView position, TextView utc, TextView velocity, TextView variables, TextView username, TextView id, String token) {
         this.token = token;

@@ -17,6 +17,8 @@ import com.app.login.R;
 import com.app.login.Models.UserStatusResponse;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,27 +54,53 @@ public class DetailsActivity extends AppCompatActivity {
         Fetch_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent intent=getIntent();
+//                if(intent.getExtras()!=null)
+//                {
+//                    loginResponse=(LoginResponse) intent.getSerializableExtra("data");
+//                    Toast.makeText(DetailsActivity.this, "The message "+loginResponse, Toast.LENGTH_SHORT).show();
+//                }
+//                userStatusResponse();
+                Call<List<UserStatusResponse>> call = ApiClient.getApiServices().userStatus(token);
+                call.enqueue(new Callback<List<UserStatusResponse>>() {
+                    @Override
+                    public void onResponse(Call<List<UserStatusResponse>> call, Response<List<UserStatusResponse>> response) {
+                        if(!response.isSuccessful()){
+                            Position.setText("Code: "+response.code());
+                            return;
+                        }
+                        List<UserStatusResponse> userStatusResponses=response.body();
+                        for (UserStatusResponse userStatusResponse: userStatusResponses){
+                            String content="";
+                            content +="Position: "+userStatusResponse.getPosition()+"\n";
+                            content +="Variables: "+userStatusResponse.getVariables()+"\n";
+                            content +="Velocity: "+userStatusResponse.getVelocity()+"\n";
+                            content +="UTC: "+userStatusResponse.getUtc()+"\n";
+                            content +="Username: "+userStatusResponse.getUsername()+"\n";
+                            content +="ID: "+userStatusResponse.getId()+"\n";
+                            Position.setText(content);
 
+                        }
+                    }
 
-                Intent intent=getIntent();
-                if(intent.getExtras()!=null)
-                {
-                    loginResponse=(LoginResponse) intent.getSerializableExtra("data");
-                    Toast.makeText(DetailsActivity.this, "The message "+loginResponse, Toast.LENGTH_SHORT).show();
-                }
-                userStatusResponse();
+                    @Override
+                    public void onFailure(Call<List<UserStatusResponse>> call, Throwable t) {
+
+                        Toast.makeText(DetailsActivity.this, "Could not fetch any results"+t, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
 
     }
 
-    private void userStatusResponse() {
-
-        Call<UserStatusResponse> userStatusResponseCall=ApiClient.getApiServices().userStatus(token);
-
-
-    }
+//    private void userStatusResponse() {
+//
+//        Call<UserStatusResponse> userStatusResponseCall=ApiClient.getApiServices().userStatus(token);
+//
+//
+//    }
 
 
 //    private void userStatusResponse(final ApiClient token) {
