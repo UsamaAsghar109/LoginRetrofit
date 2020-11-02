@@ -27,7 +27,7 @@ import retrofit2.http.Header;
 public class DetailsActivity extends AppCompatActivity {
 
     ApiClient instance;
-    private String token;
+    private String token,username;
     LoginResponse loginResponse;
     UserStatusResponse userStatusResponse;
     Button Fetch_btn;

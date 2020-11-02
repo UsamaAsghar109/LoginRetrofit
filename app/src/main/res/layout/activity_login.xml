@@ -88,7 +88,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/roundbutton"
-        android:text="Token"
+        android:text="Fetch User Details"
         android:textColor="@color/white"
         android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/myToken"
                 android:layout_centerHorizontal="true"
-                android:text="Your text"
+                android:text=""
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white" />
 

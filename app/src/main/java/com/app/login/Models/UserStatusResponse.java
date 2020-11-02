@@ -33,6 +33,48 @@ public class UserStatusResponse {
     @Expose
     private int id;
 
+    @SerializedName("email")
+    @Expose
+    private String email;
+
+    @SerializedName("deviceActivity")
+    @Expose
+    private String deviceActivity;
+
+    @SerializedName("surname")
+    @Expose
+    private String surname;
+
+    public String getDeviceActivity() {
+        return deviceActivity;
+    }
+
+    public void setDeviceActivity(String deviceActivity) {
+        this.deviceActivity = deviceActivity;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @SerializedName("phoneNumber")
+    @Expose
+    private String phoneNumber;
+
+
+
 //    public UserStatusResponse(String token, Position position, String utc, Velocity velocity, Variable variables, String username, int id) {
 //        this.token = token;
 //        this.position = position;
@@ -101,5 +143,13 @@ public class UserStatusResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
