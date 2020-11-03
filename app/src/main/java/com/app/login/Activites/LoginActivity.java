@@ -31,9 +31,9 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     TextView textView;
-    String token, username;
+    public String token, username;
     EditText usernameEd, passwordEd;
-    Button login, myToken;
+    Button login, myToken,buses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         passwordEd = findViewById(R.id.passwordEd);
         textView = findViewById(R.id.check_data);
         myToken = findViewById(R.id.myToken);
+        buses=findViewById(R.id.buses);
         login = findViewById(R.id.login);
+
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -62,6 +65,14 @@ public class LoginActivity extends AppCompatActivity {
                     loginUser(loginRequest);
 
                 }
+            }
+        });
+
+        buses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                startActivity(new Intent(LoginActivity.this,BusesDetailsActivity.class));
             }
         });
 
@@ -92,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                             content += "ID: " + userStatusResponse.getId() + "\n";
 //                            content+="Device Activity:"+userStatusResponse.getDeviceId()+"\n";
                             content += "Surname: " + userStatusResponse.getSurname() + "\n";
-                            content += "Phone Number: " + userStatusResponse.getPhoneNumber() + "\n";
+//                            content += "Phone Number: " + userStatusResponse.getPhoneNumber() + "\n";
 //                            content += "Template ID: " + userStatusResponse.getTemplateId() + "\n";
                             content += "          " + "\n\n";
                             textView.append(content);
@@ -121,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                     token = response.body().getToken();
                     Toast.makeText(LoginActivity.this, loginResponse.getToken(), Toast.LENGTH_SHORT).show();
 //
-//                  startActivity(new Intent(LoginActivity.this, DetailsActivity.class).putExtra("data", token));
+//                  startActivity(new Intent(LoginActivity.this, BusesDetailsActivity.class).putExtra("data", token));
 
                 } else {
                     Toast.makeText(LoginActivity.this, "Login is not correct", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.app.login.Api;
 
+import com.app.login.Models.BusesViewModel;
 import com.app.login.Models.LoginRequest;
 import com.app.login.Models.LoginResponse;
 import com.app.login.Models.Position;
@@ -15,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -29,4 +31,7 @@ public interface ApiServices {
 
     @GET("users")
     Call<List<UserStatusResponse>> userStatus(@Header("Authorization") String token);
+
+    @GET("views")
+    Call<List<BusesViewModel>> busesViews(@Header("Authorization") String AUTH);
 }
